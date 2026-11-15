@@ -1,0 +1,27 @@
+# Datos y warehouse generados
+data/*
+!data/.gitkeep
+*.duckdb
+*.duckdb.wal
+
+# Resultados de corridas (las figuras y tablas finales sí se versionan)
+results/runs/
+
+# dbt
+dbt_project/target/
+dbt_project/logs/
+dbt_project/dbt_packages/
+dbt_project/.user.yml
+logs/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+.venv/
+
+# SO / editores
+.DS_Store
+.idea/
+.vscode/

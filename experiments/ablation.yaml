@@ -1,0 +1,15 @@
+# Ablación de los dos mecanismos agregados tras la primera corrida
+# (openspec/changes/fix-degenerate-first-run): eliminación de clones y
+# mutación de crecimiento. Producto cartesiano: 4 variantes x 5 semillas.
+base_config: experiments/base.yaml
+design: full
+seeds: [1, 2, 3, 4, 5]
+
+parameters:
+  algorithm.dedupe: [false, true]                       # false = NSGA-II (μ+λ) con clones
+  algorithm.mutation_weights.extend: [0.0, 0.25]        # 0.0 = sin mutación de crecimiento
+
+overrides:
+  output_dir: results/runs/ablation
+
+output_table: results/tables/ablation.csv

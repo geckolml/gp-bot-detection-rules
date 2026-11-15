@@ -1,0 +1,8 @@
+.git
+data
+results/runs
+dbt_project/target
+dbt_project/logs
+**/__pycache__
+.pytest_cache
+.venv

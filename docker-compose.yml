@@ -1,0 +1,42 @@
+x-app: &app
+  build: .
+  image: gp-bot-detection-rules:latest
+  working_dir: /app
+  volumes:
+    - ./:/app
+
+services:
+  # 1. Simulador: genera data/raw/<escenario>/*.parquet
+  sim:
+    <<: *app
+    command: python -m simulator.simulate --scenario all
+
+  # 2. Features con dbt sobre DuckDB: data/warehouse.duckdb
+  dbt:
+    <<: *app
+    working_dir: /app/dbt_project
+    environment:
+      DBT_PROFILES_DIR: /app/dbt_project
+    command: dbt build --exclude path:models/moderation
+
+  # 3. Evolución de reglas (PG + NSGA-II)
+  evo:
+    <<: *app
+    command: python -m evo.run --config experiments/base.yaml
+
+  # 4. Métodos de referencia
+  baselines:
+    <<: *app
+    command: python -m baselines.run_baselines --config experiments/base.yaml
+
+  # Tests
+  test:
+    <<: *app
+    command: pytest -q
+
+  # Análisis interactivo
+  jupyter:
+    <<: *app
+    ports:
+      - "8888:8888"
+    command: jupyter lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token='' --notebook-dir=/app

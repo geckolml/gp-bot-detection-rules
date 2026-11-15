@@ -1,0 +1,52 @@
+# Configuración base de una corrida de evolución.
+seed: 42
+output_dir: results/runs
+
+data:
+  warehouse: data/warehouse.duckdb
+  table: fct_user_activity_hourly
+  train_scenario: train
+  test_scenario: test          # incluye el bot sigiloso, nunca visto en entrenamiento
+  max_train_rows: 40000        # submuestreo estratificado (null = todas las filas)
+
+algorithm:
+  mode: multi                  # multi = NSGA-II | single = un objetivo con penalización
+  population: 200              # múltiplo de 4 (requerido por selTournamentDCD)
+  generations: 150             # el hipervolumen se estabiliza hacia la generación 150
+  cxpb: 0.8
+  mutpb: 0.3
+  max_height: 8                # límite estático de altura (control de bloat)
+  init_min_depth: 1
+  init_max_depth: 4
+  tournament_size: 3           # solo modo single
+  elite: 2                     # solo modo single
+  dedupe: true                 # un individuo por vector de objetivos antes del reemplazo
+  mutation_weights:
+    uniform: 0.30              # reemplaza un subárbol
+    node_replacement: 0.20     # and<->or, gt<->lt, cambia feature
+    ephemeral: 0.25            # cambia un umbral
+    extend: 0.25               # crecimiento: x -> and_(x, nuevo) | or_(x, nuevo)
+
+fitness:
+  fpr_max: 0.02                # restricción: FPR <= 2 %
+  penalty_lambda: 5.0          # penalización por violar la restricción (modo multi)
+  hv_ref_size: 511             # tamaño de referencia del hipervolumen (fijo: no depende de max_height)
+  single_fpr_weight: 5.0       # peso del FPR (modo single)
+  parsimony: 0.002             # penalización por nodo (modo single)
+
+# Regla final que se reporta y se exporta: se elige solo con entrenamiento.
+selection:
+  max_size: 15                 # nodos de la regla simplificada (null = sin límite)
+
+# Método base LCS (baselines/lcs.py). No afecta a la evolución de reglas.
+lcs:
+  generations: 300
+  pop_size: 200
+  mutation_rate: 0.03          # por gen (27 bits: 9 features x 3 cortes)
+  wildcard_prob: 0.85          # proporción de comodines (#) en las condiciones
+  batch_size: 512              # filas evaluadas por generación
+  quantile_cuts: [0.1, 0.5, 0.9]
+
+parallel:
+  enabled: true
+  processes: null              # null = todos los núcleos

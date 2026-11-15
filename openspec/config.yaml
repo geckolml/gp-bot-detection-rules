@@ -1,0 +1,47 @@
+schema: spec-driven
+
+context: |
+  Proyecto: gp-bot-detection-rules
+  Trabajo final del curso Computación Evolutiva (Maestría en IA, UNI, 2026-II).
+
+  Dominio: una plataforma social con chat en tiempo real y descubrimiento de
+  usuarios por geolocalización sufre spam y bots que superan captcha y filtros.
+  Se evolucionan reglas lógicas interpretables (Programación Genética tipada,
+  multiobjetivo con NSGA-II) que se compilan a SQL y se ejecutan como modelos
+  de dbt sobre DuckDB.
+
+  Privacidad: NO se usan datos reales de usuarios. Todos los datos provienen de
+  un simulador basado en agentes. Nunca nombrar la plataforma real ni describir
+  su tipo más allá de "plataforma social con chat y geolocalización".
+
+  Stack:
+    - Python 3.11, Docker + Docker Compose (todo corre en contenedores)
+    - DEAP (Programación Genética tipada, NSGA-II, hipervolumen)
+    - numpy / pandas / pyarrow (simulador, datos en Parquet)
+    - DuckDB + dbt-core + dbt-duckdb (warehouse local y features)
+    - sqlglot (validación de SQL generado)
+    - scikit-learn (métodos base), matplotlib (gráficos), pytest (tests)
+
+  Fases del enunciado del curso que el proyecto debe cubrir:
+    I. Definición y modelado del problema
+    II. Diseño del algoritmo evolutivo
+    III. Implementación y experimentación (incluye estudio de sensibilidad)
+    IV. Análisis y conclusiones (convergencia, sensibilidad, mejor solución,
+        comparación con métodos base). Esta es la fase más importante.
+
+  Convenciones:
+    - Documentación y specs en español; identificadores de código en inglés.
+    - Toda corrida es reproducible: semilla fija y configuración YAML guardada
+      junto a los resultados.
+    - Los resultados de cada corrida se guardan en results/runs/<run_id>/.
+
+rules:
+  proposal:
+    - Indicar qué fase del enunciado del curso (I–IV) cubre el cambio.
+  specs:
+    - Escribir requisitos en español conservando las palabras clave SHALL/MUST.
+    - Cada requisito debe tener al menos un escenario con WHEN/THEN.
+  design:
+    - Justificar decisiones de algoritmo con temas del sílabo del curso cuando aplique.
+  tasks:
+    - Incluir una tarea de test por cada requisito verificable.

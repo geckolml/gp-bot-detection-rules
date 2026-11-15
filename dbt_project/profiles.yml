@@ -1,0 +1,8 @@
+gp_bot_detection:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      # Relativo a dbt_project/ (funciona igual en el contenedor y en local)
+      path: ../data/warehouse.duckdb
+      threads: 4

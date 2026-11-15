@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: fct_user_activity_hourly
+    description: >
+      Features de comportamiento por usuario y ventana horaria. Entrada de la
+      evolución de reglas, de los métodos base y de las reglas desplegadas.
+    columns:
+      - name: scenario
+        data_tests: [not_null, {accepted_values: {values: ["train", "test"]}}]
+      - name: user_id
+        data_tests: [not_null]
+      - name: window_start
+        data_tests: [not_null]
+      - name: msgs_count
+        description: Mensajes enviados en la ventana
+        data_tests: [not_null]
+      - name: msgs_per_min
+        data_tests: [not_null]
+      - name: unique_recipients
+        data_tests: [not_null]
+      - name: link_ratio
+        description: Proporción de mensajes con link
+        data_tests: [not_null]
+      - name: dup_template_ratio
+        description: 1 - plantillas distintas / mensajes
+        data_tests: [not_null]
+      - name: avg_msg_len
+        data_tests: [not_null]
+      - name: reply_rate
+        description: Proporción de destinatarios de la ventana que respondieron alguna vez
+        data_tests: [not_null]
+      - name: account_age_hours
+        data_tests: [not_null]
+      - name: max_geo_speed_kmh
+        description: Velocidad implícita máxima entre ubicaciones (0 si hay menos de 2)
+        data_tests: [not_null]
+      - name: is_bot
+        data_tests: [not_null]

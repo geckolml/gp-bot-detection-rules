@@ -1,0 +1,19 @@
+name: gp_bot_detection
+version: "0.1.0"
+config-version: 2
+profile: gp_bot_detection
+
+model-paths: ["models"]
+test-paths: ["tests"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  gp_bot_detection:
+    +materialized: table
+    staging:
+      +materialized: view
+    moderation:
+      # Modelos generados automáticamente por evo/export_dbt.py
+      +materialized: table
+      +tags: ["moderation"]

@@ -1,0 +1,18 @@
+# Estudio de sensibilidad.
+# design: one_at_a_time -> se varía un parámetro a la vez alrededor de la base
+#         full          -> producto cartesiano de todos los valores
+base_config: experiments/base.yaml
+design: one_at_a_time
+seeds: [1, 2, 3, 4, 5]
+
+# Los valores de la configuración base deben estar incluidos en cada lista.
+parameters:
+  algorithm.population: [100, 200, 400]
+  algorithm.mutpb: [0.1, 0.3, 0.5]
+  algorithm.cxpb: [0.6, 0.8, 0.95]
+  algorithm.max_height: [6, 8, 10]
+
+# Sobrescrituras comunes a todas las corridas del estudio
+overrides:
+  algorithm.generations: 150
+  output_dir: results/runs/sensitivity

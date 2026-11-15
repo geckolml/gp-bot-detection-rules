@@ -1,0 +1,9 @@
+[project]
+name = "gp-bot-detection-rules"
+version = "0.1.0"
+description = "Reglas interpretables de detección de bots con Programación Genética multiobjetivo, compiladas a SQL (dbt + DuckDB)."
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
